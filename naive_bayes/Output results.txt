@@ -1,0 +1,5 @@
+no. of Chris training emails: 7936
+no. of Sara training emails: 7884
+training time: 2.77 s
+training time: 0.466 s
+0.973265073948
