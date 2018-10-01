@@ -1,0 +1,50 @@
+kernel=linear
+--------------
+no. of Chris training emails: 7936
+no. of Sara training emails: 7884
+training time: 194.42 s
+testing time: 20.331 s
+0.984072810011
+
+
+clf = svm.SVC(kernel = 'linear', C = 1000) higher the C, more overfitting
+------------------------------------------
+no. of Chris training emails: 7936
+no. of Sara training emails: 7884
+training time: 107.262 s
+testing time: 9.382 s
+0.994880546075
+
+
+clf = svm.SVC(kernel = 'rbf', C = 1000, gamma = 'auto') higher the gamma, more overfitting
+-------------------------------------------------------
+no. of Chris training emails: 7936
+no. of Sara training emails: 7884
+training time: 240.676 s
+testing time: 25.873 s
+0.982935153584
+
+
+clf = svm.SVC(kernel = 'rbf')
+-----------------------------
+training time: 1224.172 s
+testing time: 198.558 s
+0.492036405006
+
+clf = svm.SVC(kernel = 'rbf' , C=100)
+--------------------------------------
+training time: 587.439 s
+testing time: 75.018 s
+0.955062571104
+
+clf = svm.SVC(kernel = 'rbf' , C=1000)
+--------------------------------------
+training time: 240.98 s
+testing time: 24.999 s
+0.982935153584
+
+clf = svm.SVC(kernel = 'rbf' , C=10000)
+--------------------------------------
+training time: 132.915 s
+testing time: 13.138 s
+0.990898748578
