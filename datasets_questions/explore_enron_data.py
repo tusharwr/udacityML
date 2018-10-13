@@ -66,3 +66,7 @@ for key in enron_data:
 
 print(count_nan)
 print(count_email)
+
+"""
+A python dictionary can’t be read directly into an sklearn classification or regression algorithm; instead, it needs a numpy array or a list of lists (each element of the list (itself a list) is a data point, and the elements of the smaller list are the features of that point).
+"""

@@ -18,7 +18,13 @@ net_worths = pickle.load( open("practice_outliers_net_worths.pkl", "r") )
 ### second argument of reshape command is a tuple of integers: (n_rows, n_columns)
 ### by convention, n_rows is the number of data points
 ### and n_columns is the number of features
+
+#print(ages) 100 records in a list
+
 ages       = numpy.reshape( numpy.array(ages), (len(ages), 1))
+
+#print(ages) - 100 records, each record is a list, all 100 lists in a list
+
 net_worths = numpy.reshape( numpy.array(net_worths), (len(net_worths), 1))
 from sklearn.cross_validation import train_test_split
 ages_train, ages_test, net_worths_train, net_worths_test = train_test_split(ages, net_worths, test_size=0.1, random_state=42)
@@ -26,11 +32,28 @@ ages_train, ages_test, net_worths_train, net_worths_test = train_test_split(ages
 ### fill in a regression here!  Name the regression object reg so that
 ### the plotting code below works, and you can see what your regression looks like
 
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+#print len(ages_train) -90
+#print(ages_train)
+
+reg = LinearRegression().fit(ages_train, net_worths_train)
+
+print("Training Score : ", reg.score(ages_train, net_worths_train))
+
+print("Slope  :", reg.coef_)
+
+print("Intercept : ", reg.intercept_ )
+
+reg.predict(net_worths_test)
+
+print("Test score : ",reg.score(ages_test, net_worths_test))
+#print "************************************************************************"
 
 
-
-
-
+print("Mean squared error: %.2f"
+      % mean_squared_error(ages_train, net_worths_train))
 
 
 
