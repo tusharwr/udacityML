@@ -8,7 +8,7 @@
 
 
 import pickle
-import numpy
+import numpy as np
 import matplotlib.pyplot as plt
 import sys
 sys.path.append("../tools/")
@@ -17,7 +17,7 @@ from feature_format import featureFormat, targetFeatureSplit
 
 
 
-def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature 1", f2_name="feature 2", f3_name="feature_3"):
+def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature 1", f2_name="feature 2"):
     """ some plotting code designed to help you visualize your clusters """
 
     ### plot each cluster with a different color--add more colors for
@@ -67,9 +67,8 @@ print("Min : ", min_amt)
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
-feature_3 = "total_payments"
 poi  = "poi"
-features_list = [poi, feature_1, feature_2, feature_3]
+features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
@@ -101,9 +100,24 @@ print
 ### you'll want to change this line to 
 ### for f1, f2, _ in finance_features:
 ### (as it's currently written, the line below assumes 2 features)
-for f1, f2, f3 in finance_features:
+for f1, f2 in finance_features:
     plt.scatter( f1, f2 )
 plt.show()
+
+### applying feature selection MaxMin here
+
+from sklearn import preprocessing
+X_train = np.array(data)
+min_max_scaler = preprocessing.MinMaxScaler()
+X_train_minmax = min_max_scaler.fit_transform(X_train)
+
+#on test data
+X_test = np.array([[0.0, 200000, 1000000]])
+X_test_minmax = min_max_scaler.transform(X_test)
+X_test_minmax
+print X_test_minmax
+
+
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
@@ -117,7 +131,7 @@ pred = kmeans.predict(data)
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
 try:
-    Draw(pred, finance_features, poi, mark_poi=False, name="clusters_3.pdf", f1_name=feature_1, f2_name=feature_2, f3_name=feature_3)
+    Draw(pred, finance_features, poi, mark_poi=False, name="clusters_3.pdf", f1_name=feature_1, f2_name=feature_2)
 except NameError:
     print "no predictions object named pred found, no clusters to plot"
 
