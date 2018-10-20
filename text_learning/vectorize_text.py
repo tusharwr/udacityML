@@ -41,23 +41,37 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
         ### only look at first 200 emails when developing
         ### once everything is working, remove this line to run over full dataset
-        temp_counter += 1
+        #temp_counter += 10
         if temp_counter < 200:
             path = os.path.join('..', path[:-1])
-            print path
+            #print path
             email = open(path, "r")
 
             ### use parseOutText to extract the text from the opened email
+            text = parseOutText(email)
 
             ### use str.replace() to remove any instances of the words
             ### ["sara", "shackleton", "chris", "germani"]
+            replace_list = ["sara", "shackleton", "chris", "germani"]
+            text = text.replace("sara", "").replace("shackleton", "")
+            text = text.replace("chris", "").replace("germani","")            
 
             ### append the text to word_data
 
-            ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
+            word_data.append(text)
+            
+            #print word_data
 
+            ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
+            
+            if name == "sara":
+                from_data.append(0)
+            else:
+                from_data.append(1)
 
             email.close()
+
+#print word_data[0]
 
 print "emails processed"
 from_sara.close()
@@ -71,5 +85,12 @@ pickle.dump( from_data, open("your_email_authors.pkl", "w") )
 
 
 ### in Part 4, do TfIdf vectorization here
-
-
+from sklearn.feature_extraction.text import TfidfVectorizer
+vectorizer = TfidfVectorizer(stop_words = "english")
+X = vectorizer.fit_transform(word_data)
+#print vectorizer.get_feature_names()
+"""
+[u'1400', u'6463490', u'713', u'77002', u'8535620', u'eb3801a', u'enron', u'fax', u'forego', u'houston', u'list', u'nonprivilegedpst', u'ph', u'pleas', u'richard', u'sbaile2', u'send', u'servic', u'smith', u'street', u'susan', u'thank', u'tx', u'wholesal']
+"""
+print len(vectorizer.get_feature_names())
+print vectorizer.get_feature_names()[34597]
