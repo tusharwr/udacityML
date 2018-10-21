@@ -114,7 +114,6 @@ X_train_minmax = min_max_scaler.fit_transform(X_train)
 #on test data
 X_test = np.array([[0.0, 200000, 1000000]])
 X_test_minmax = min_max_scaler.transform(X_test)
-X_test_minmax
 print X_test_minmax
 
 
